@@ -2,7 +2,7 @@
 
 ![.NET](https://img.shields.io/badge/.NET-10.0-purple)
 ![License](https://img.shields.io/badge/license-GPLv3-blue)
-![Version](https://img.shields.io/badge/version-1.0.0-green)
+[![NuGet](https://img.shields.io/nuget/v/Naples.svg?color=green)](https://www.nuget.org/packages/Naples)
 
 Naples is a simple asynchronous runtime for C#, built as a learning project inspired by the Rust library Tokio. The name is a nod to the Italian city — and to Tokio itself, which is also named after a city.
 
