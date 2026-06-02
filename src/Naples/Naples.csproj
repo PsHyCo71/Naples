@@ -6,7 +6,10 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Naples</PackageId>
-    <Version>1.0.0</Version>
+    <RepositoryUrl>https://github.com/PsHyCo71/Naples</RepositoryUrl>
+    <PackageTags>async;runtime;tokio;scheduler;tasks;multitasking</PackageTags>
+    <PackageReleaseNotes>v1.1.0 - Added exception handling, cancelled tasks, timer, task priority</PackageReleaseNotes>
+    <Version>1.1.0</Version>
     <Authors>PsHyCo71</Authors>
     <Description>A lightweight async runtime for C#</Description>
   </PropertyGroup>

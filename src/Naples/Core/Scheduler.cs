@@ -2,22 +2,30 @@
 
 public class Scheduler
 {
-    private Queue<Func<Task>> _queue = new();
+    private readonly PriorityQueue<Func<CancellationToken, Task>, int> _queue = new();
 
-    public void Enqueue(Func<Task> task)
+    public event Action<Exception>? OnTaskFailed;
+
+    public void Enqueue(Func<CancellationToken, Task> task, int priority)
     {
-        _queue.Enqueue(task);
+        _queue.Enqueue(task, priority);
     }
 
-    public void Run()
+    public void Run( int priority, CancellationToken token = default)
     {
-        while(_queue.Count > 0)
+        while (_queue.Count > 0)
         {
             var toRunTask = _queue.Dequeue();
-            var task = toRunTask();
-            if (!task.IsCompleted)
+            try
             {
-                _queue.Enqueue(toRunTask);
+                var task = toRunTask(token);
+                if (!task.IsCompleted)
+                    _queue.Enqueue(toRunTask, priority);
+            }
+            catch (Exception ex)
+            {
+                OnTaskFailed?.Invoke(ex);
+                continue;
             }
         }
     }

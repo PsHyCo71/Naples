@@ -1,16 +1,24 @@
+using System.Net.NetworkInformation;
+
 namespace Naples.Core;
 
 public class Runtime
 {
     private Scheduler _scheduler = new();
 
-    public void Spawn(Func<Task> task)
+    public event Action<Exception>? OnTaskFailed
     {
-        _scheduler.Enqueue(task);
+        add => _scheduler.OnTaskFailed += value;
+        remove => _scheduler.OnTaskFailed -= value;
     }
 
-    public void Run()
+    public void Spawn(Func<CancellationToken, Task> task, int priority)
     {
-        _scheduler.Run();
+        _scheduler.Enqueue(task, priority);
+    }
+
+    public void Run(int priority, CancellationToken token = default)
+    {
+        _scheduler.Run(priority, token);
     }
 }
