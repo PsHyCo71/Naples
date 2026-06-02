@@ -10,8 +10,8 @@ public class SchedulerTests
     {
         bool ran = false;
         var scheduler = new Scheduler();
-        scheduler.Enqueue((token) => { ran = true; return Task.CompletedTask; });
-        scheduler.Run();
+        scheduler.Enqueue((token) => { ran = true; return Task.CompletedTask; }, 0);
+        scheduler.Run(new List<Scheduler>(), CancellationToken.None);
         Assert.True(ran);
     }
 
@@ -30,9 +30,9 @@ public class SchedulerTests
                 return tcs.Task; // task che non finisce mai
             }
             return Task.CompletedTask;
-        });
+        }, 0);
 
-        scheduler.Run();
+        scheduler.Run(new List<Scheduler>(), CancellationToken.None);
         Assert.Equal(3, count);
     }
 
@@ -44,8 +44,8 @@ public class SchedulerTests
         var scheduler = new Scheduler();
 
         scheduler.OnTaskFailed += ex => exceptionCaught = true;
-        scheduler.Enqueue((token) => throw new Exception("Errore."));
-        scheduler.Run();
+        scheduler.Enqueue((token) => throw new Exception("Errore."), 0);
+        scheduler.Run(new List<Scheduler>(), CancellationToken.None);
         Assert.True(exceptionCaught);
     }
 
@@ -62,9 +62,23 @@ public class SchedulerTests
                 canceled = true;
             }
             return Task.CompletedTask;
-        });
+        }, 0);
         cts.Cancel();
-        scheduler.Run(cts.Token);
+        scheduler.Run(new List<Scheduler>(), cts.Token);
         Assert.True(canceled);
+    }
+
+    [Fact]
+    public void PriorityTest()
+    {
+        var scheduler = new Scheduler();
+        List<string> order = new List<string>();
+
+        scheduler.Enqueue(token => { order.Add("A"); return Task.CompletedTask; }, 3);
+        scheduler.Enqueue(token => { order.Add("B"); return Task.CompletedTask; }, 1);
+        scheduler.Enqueue(token => { order.Add("C"); return Task.CompletedTask; }, 2);
+        scheduler.Run(new List<Scheduler>(), CancellationToken.None);
+        
+        Assert.Equal(new[] {"B", "C", "A"}, order);
     }
 }
