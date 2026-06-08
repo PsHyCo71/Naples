@@ -1,6 +1,6 @@
 namespace Naples.Tests;
 
-using Naples.Sync;
+using Naples;
 using Xunit;
 
 public class WakerTests

@@ -1,6 +1,6 @@
 namespace Naples.Tests;
 
-using Naples.Core;
+using Naples;
 using Xunit;
 
 public class SchedulerTests

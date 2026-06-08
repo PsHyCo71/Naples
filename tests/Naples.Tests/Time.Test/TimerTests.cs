@@ -1,7 +1,7 @@
 namespace Naples.Tests;
 
 using System.Diagnostics;
-using Naples.Time;
+using Naples;
 using Xunit;
 
 public class TimerTest

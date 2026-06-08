@@ -7,11 +7,21 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Naples</PackageId>
     <RepositoryUrl>https://github.com/PsHyCo71/Naples</RepositoryUrl>
+    <AssemblyName>Naples</AssemblyName>
+    <RootNamespace>Naples</RootNamespace>
+    <PackageProjectUrl>https://github.com/PsHyCo71/Naples</PackageProjectUrl>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>async;runtime;tokio;scheduler;tasks;multitasking</PackageTags>
-    <PackageReleaseNotes>v1.1.0 - Added exception handling, cancelled tasks, timer, task priority</PackageReleaseNotes>
-    <Version>1.1.0</Version>
+    <PackageReleaseNotes>v2.0.0 - Added exception handling, task cancellation, timer, task priority, multi-thread executor with work stealing, thread-safe Channel, TCP support via Listener and Client</PackageReleaseNotes>
+    <Version>2.0.0</Version>
     <Authors>PsHyCo71</Authors>
     <Description>A lightweight async runtime for C#</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>
